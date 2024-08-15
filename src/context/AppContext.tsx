@@ -1,7 +1,11 @@
 import React, { ReactNode, createContext, useState } from "react";
-import { getComputerChoice } from "../utils/functions";
+import { getComputerChoice, getWinningCard } from "../utils/functions";
+import { BetResult, GameState } from "../types/types";
 
 interface AppContext {
+  gameState: 0 | 1;
+  betResult: 0 | 1 | 2 | 3;
+  wonCard: "scissors" | "rock" | "paper";
   balanceStats: {
     balance: number;
     bet: number;
@@ -17,9 +21,13 @@ interface AppContext {
     cardType: "scissors" | "rock" | "paper"
   ) => void;
   playGame: () => void;
+  resetGame: () => void;
 }
 
 export const AppContext = createContext<AppContext>({
+  gameState: GameState.START,
+  betResult: BetResult.START,
+  wonCard: 'scissors',
   balanceStats: {
     balance: 0,
     bet: 0,
@@ -30,27 +38,36 @@ export const AppContext = createContext<AppContext>({
     paper: 0,
     scissors: 0,
   },
-  handleBet: () => {},
-  playGame: () => {},
+  handleBet: () => { },
+  playGame: () => { },
+  resetGame: () => { }
 });
 
 type Props = {
   children: ReactNode;
 };
 
+const initialAppState: AppContext = {
+  gameState: GameState.START,
+  betResult: BetResult.START,
+  wonCard: 'scissors',
+  balanceStats: {
+    balance: 5000,
+    bet: 0,
+    win: 0,
+  },
+  cardBets: {
+    rock: 0,
+    paper: 0,
+    scissors: 0,
+  },
+  handleBet: () => { },
+  playGame: () => { },
+  resetGame: () => { }
+}
+
 const AppContextProvider: React.FC<Props> = ({ children }) => {
-  const [appState, setAppState] = useState({
-    balanceStats: {
-      balance: 5000,
-      bet: 0,
-      win: 0,
-    },
-    cardBets: {
-      rock: 0,
-      paper: 0,
-      scissors: 0,
-    },
-  });
+  const [appState, setAppState] = useState(initialAppState);
 
   const handleBet = (
     operator: "+" | "-",
@@ -58,6 +75,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   ): void => {
     if (operator == "+") {
       setAppState((prev) => ({
+        ...prev,
         balanceStats: {
           ...prev.balanceStats,
           balance: prev.balanceStats.balance - 500,
@@ -71,6 +89,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
     } else if (appState.cardBets[cardType] == 0) return;
     else {
       setAppState((prev) => ({
+        ...prev,
         balanceStats: {
           ...prev.balanceStats,
           balance: prev.balanceStats.balance + 500,
@@ -84,24 +103,44 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
+
   const playGame = () => {
     let result = "";
     const computerChoice = getComputerChoice();
     const userChoices = Object.entries(appState.cardBets).map((card) =>
       card[1] > 0 ? card[0] : null
     );
-    if (userChoices.includes(computerChoice)) {
-      result = "YOU WIN";
-    } else result = "YOU LOSE";
+    const res = getWinningCard(userChoices, computerChoice)
+    // setAppState(prev => {
+    //   let result = 0;
+    //   if (userChoices.includes(computerChoice)) {
+    //     result = BetResult.WON;
+    //   } else result = "YOU LOSE";
+    //   return { ...prev, gameState: GameState.END, wonCard: computerChoice, betResult:  }
+    // })
     console.log(computerChoice, userChoices, result);
   };
+
+  const resetGame = () => {
+    setAppState((prev) => ({
+      ...prev,
+      gameState: GameState.START,
+      cardBets: initialAppState.cardBets,
+      betResult: initialAppState.betResult
+    }));
+  }
+
   return (
     <AppContext.Provider
       value={{
+        gameState: appState.gameState,
         balanceStats: appState.balanceStats,
+        wonCard: appState.wonCard,
         cardBets: appState.cardBets,
+        betResult: appState.betResult,
         handleBet,
         playGame,
+        resetGame
       }}
     >
       {children}
