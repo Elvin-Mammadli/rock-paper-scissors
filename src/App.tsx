@@ -1,16 +1,18 @@
-import { useState } from 'react'
-import Header from './components/Header'
-import Main from './components/Main'
+import Balance from "./components/Balance";
+import Betting from "./components/Betting";
+import Result from "./components/Result";
+import AppContextProvider from "./context/AppContext";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className='flex flex-col bg-slate-400 h-screen'>
-      <Header />
-      <Main />
-    </div>
-  )
+    <AppContextProvider>
+      <main className="flex flex-col flex-1 bg-slate-400 h-screen bg-gradient-to-b from-[#484848] to-[#1e1e1e]">
+        <Balance />
+        <Result />
+        <Betting />
+      </main>
+    </AppContextProvider>
+  );
 }
 
-export default App
+export default App;
