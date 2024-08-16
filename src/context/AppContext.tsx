@@ -1,5 +1,9 @@
 import React, { ReactNode, createContext, useState } from "react";
-import { getComputerChoice, getWinningCard } from "../utils/functions";
+import {
+  getComputerChoice,
+  getGameStats,
+  getUserChoices,
+} from "../utils/functions";
 import { BetResult, GameState } from "../types/types";
 
 interface AppContext {
@@ -27,7 +31,7 @@ interface AppContext {
 export const AppContext = createContext<AppContext>({
   gameState: GameState.START,
   betResult: BetResult.START,
-  wonCard: 'scissors',
+  wonCard: "scissors",
   balanceStats: {
     balance: 0,
     bet: 0,
@@ -38,9 +42,9 @@ export const AppContext = createContext<AppContext>({
     paper: 0,
     scissors: 0,
   },
-  handleBet: () => { },
-  playGame: () => { },
-  resetGame: () => { }
+  handleBet: () => {},
+  playGame: () => {},
+  resetGame: () => {},
 });
 
 type Props = {
@@ -50,7 +54,7 @@ type Props = {
 const initialAppState: AppContext = {
   gameState: GameState.START,
   betResult: BetResult.START,
-  wonCard: 'scissors',
+  wonCard: "scissors",
   balanceStats: {
     balance: 5000,
     bet: 0,
@@ -61,10 +65,10 @@ const initialAppState: AppContext = {
     paper: 0,
     scissors: 0,
   },
-  handleBet: () => { },
-  playGame: () => { },
-  resetGame: () => { }
-}
+  handleBet: () => {},
+  playGame: () => {},
+  resetGame: () => {},
+};
 
 const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [appState, setAppState] = useState(initialAppState);
@@ -103,22 +107,14 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-
   const playGame = () => {
-    let result = "";
     const computerChoice = getComputerChoice();
-    const userChoices = Object.entries(appState.cardBets).map((card) =>
-      card[1] > 0 ? card[0] : null
-    );
-    const res = getWinningCard(userChoices, computerChoice)
-    // setAppState(prev => {
-    //   let result = 0;
-    //   if (userChoices.includes(computerChoice)) {
-    //     result = BetResult.WON;
-    //   } else result = "YOU LOSE";
-    //   return { ...prev, gameState: GameState.END, wonCard: computerChoice, betResult:  }
-    // })
-    console.log(computerChoice, userChoices, result);
+    const userChoices = getUserChoices(appState.cardBets);
+
+    const gameResult = getGameStats(userChoices, computerChoice);
+    console.log(gameResult);
+
+    // console.log(computerChoice, userChoices, result);
   };
 
   const resetGame = () => {
@@ -126,9 +122,9 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
       ...prev,
       gameState: GameState.START,
       cardBets: initialAppState.cardBets,
-      betResult: initialAppState.betResult
+      betResult: initialAppState.betResult,
     }));
-  }
+  };
 
   return (
     <AppContext.Provider
@@ -140,7 +136,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
         betResult: appState.betResult,
         handleBet,
         playGame,
-        resetGame
+        resetGame,
       }}
     >
       {children}
