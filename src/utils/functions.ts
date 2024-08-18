@@ -1,11 +1,9 @@
-import { CardType } from "../types/types";
+import { CardType, GameResult } from "../types/types";
 
 export const getComputerChoice = () => {
   const randomSelect = Math.floor(Math.random() * 3);
   const computerChoice = ["scissors", "rock", "paper"][randomSelect] as
-    | "scissors"
-    | "rock"
-    | "paper";
+    CardType;
   return computerChoice;
 };
 
@@ -26,54 +24,37 @@ export const getGameResult = (
   player: CardType,
   computer: CardType
 ): CardType | "tie" => {
-  if (
-    (player === "paper" && computer === "scissors") ||
-    (player === "scissors" && computer === "paper")
-  )
-    return "scissors";
-  if (
-    (player === "paper" && computer === "rock") ||
-    (player === "rock" && computer === "paper")
-  )
-    return "paper";
-  if (player === "paper" && computer === "paper") return "tie";
-  if (player === "scissors" && computer === "scissors") return "tie";
-  if (player === "rock" && computer === "rock") return "tie";
-  else return "rock";
+  if (player === computer) return "tie";
+
+  const winningCombos: Record<CardType, CardType> = {
+    rock: "scissors",
+    paper: "rock",
+    scissors: "paper",
+  };
+
+  return winningCombos[player] === computer ? player : computer;
 };
 
 export const getGameStats = (
   userChoices: [CardType] | [CardType, CardType],
   computerChoice: CardType
 ) => {
-  // {
-  //   computer: 'rock',
-  //   player: 'scissors',
-  //   who_won: 'tie'
-  //   won_card: '',
-  // }
-
-  const gameStats: { [key: string]: string } = {};
+  const gameResult: Record<string, string> = {};
   userChoices.forEach((userChoice, i) => {
-    gameStats["player"] = userChoice;
-    gameStats["computer"] = computerChoice;
+    gameResult["player_position_" + (i + 1)] = userChoice;
+    gameResult["computer"] = computerChoice;
     const result = getGameResult(userChoice, computerChoice);
-    if (result === "tie") {
-      gameStats["who_won"] = result;
-      gameStats["won_card"] = "";
+    if (result === userChoice) {
+      // Player Won
+      gameResult["player_result_" + (i + 1)] = 'won'
+    } else if (result === computerChoice) {
+      // Player Lost
+      gameResult["player_result_" + (i + 1)] = 'lost'
     } else {
-      if (i === 1) {
-        gameStats["who_won"] = result === userChoice ? "player" : "tie";
-        gameStats["won_card"] = "";
-      }
-      gameStats["won_card"] = result;
+      // Tie
+      gameResult["player_result_" + (i + 1)] = 'tie'
     }
+    gameResult['won_card_' + (i + 1)] = result
   });
-  return gameStats;
+  return gameResult as GameResult;
 };
-
-// userChoices.forEach((userChoice, i) => {
-// res["player_position_" + (i + 1)] = userChoice;
-// res["computer"] = computerChoice;
-// res["result_" + (i + 1)] = getWonCard(userChoice, computerChoice);
-// };

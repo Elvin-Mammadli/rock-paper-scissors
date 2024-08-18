@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import Card from "./_components/Card";
 import { AppContext } from "../../context/AppContext";
-import { GameState } from "../../types/types";
+import { CardType, GameState } from "../../types/types";
 
 const Betting: React.FC = () => {
-  const { playGame, cardBets, handleBet, gameState, resetGame } = useContext(AppContext);
+  const { cardBets, gameState, handleBet, playGame, resetGame } = useContext(AppContext);
 
   const btnDisabled = () => {
     const sumBet = Object.values(cardBets).reduce((acc, cum) => acc + cum);
@@ -19,7 +19,7 @@ const Betting: React.FC = () => {
         {Object.entries(cardBets).map((data) => {
           return <Card
             key={data[0]}
-            type={data[0] as "scissors" | "rock" | "paper"}
+            type={data[0] as CardType}
             amount={data[1]}
             handleBet={handleBet}
             hideBet={cardBetToBeHidden.length === 1 && cardBetToBeHidden[0][0] === data[0]}

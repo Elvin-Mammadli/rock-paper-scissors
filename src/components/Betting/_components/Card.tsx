@@ -1,11 +1,12 @@
 import React from "react";
+import { CardType } from "../../../types/types";
 
 type Props = {
-  type: "scissors" | "rock" | "paper";
+  type: CardType;
   amount: number;
   handleBet: (
     operator: "+" | "-",
-    cardType: "scissors" | "rock" | "paper"
+    cardType: CardType
   ) => void;
   hideBet: boolean;
 };
