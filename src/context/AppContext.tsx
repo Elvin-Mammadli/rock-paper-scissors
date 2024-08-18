@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import {
   getComputerChoice,
   getGameStats,
@@ -100,7 +100,7 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }) => 
       let balance = appState.balanceStats.balance;
       const bet = appState.balanceStats.bet;
       const { player_position_1, player_position_2, player_result_1, player_result_2, won_card_2 } = gameResult
-      const betTwoPositions = won_card_2 ? true : false;
+      const betTwoPositions = !!won_card_2;
       const winningMultiplier = player_position_2 ? 3 : 14;
 
       if (player_position_1 === '') return
@@ -150,10 +150,7 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }) => 
   return (
     <AppContext.Provider
       value={{
-        gameState: appState.gameState,
-        balanceStats: appState.balanceStats,
-        cardBets: appState.cardBets,
-        gameResult: appState.gameResult,
+        ...appState,
         handleBet,
         playGame,
         resetGame,
