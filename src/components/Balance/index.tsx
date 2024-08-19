@@ -4,9 +4,7 @@ import { AppContext } from "../../context/AppContext";
 
 const Balance: React.FC = () => {
   const state = useContext(AppContext);
-  const { balanceStats, cardBets } = state;
-
-  // console.log(balanceStats, cardBets);
+  const { balanceStats } = state;
 
   return (
     <header>

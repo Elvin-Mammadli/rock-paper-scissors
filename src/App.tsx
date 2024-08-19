@@ -1,7 +1,7 @@
 import Balance from "./components/Balance";
 import Betting from "./components/Betting";
 import Result from "./components/Result";
-import AppContextProvider from "./context/AppContext";
+import AppContextProvider from "./context/AppContextProvider";
 
 function App() {
   return (

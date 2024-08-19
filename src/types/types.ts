@@ -1,12 +1,12 @@
-import { ReactNode } from "react";
-
 export enum GameState {
   START,
   END,
 }
 
 export type CardType = "scissors" | "rock" | "paper";
+
 export type PlayerResult = "won" | "lost" | "tie";
+
 export type GameResult = {
   computer: CardType | "";
   player_position_1: CardType | "";
@@ -39,6 +39,9 @@ export interface IAppContext {
   resetGame: () => void;
 }
 
-export type AppContextProviderProps = {
-  children: ReactNode;
-};
+export type BestOutcome = {
+  computer: "" | CardType;
+  player_position: "" | CardType;
+  player_result: "" | PlayerResult;
+  won_card: "" | CardType | "tie";
+}

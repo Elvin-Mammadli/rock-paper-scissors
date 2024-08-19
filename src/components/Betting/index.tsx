@@ -1,10 +1,17 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Card from "./_components/Card";
 import { AppContext } from "../../context/AppContext";
 import { CardType, GameState } from "../../types/types";
+import { getBestOutcome } from "../../utils/functions";
 
 const Betting: React.FC = () => {
-  const { cardBets, gameState, handleBet, playGame, resetGame } = useContext(AppContext);
+  const { cardBets, gameState, gameResult, handleBet, playGame, resetGame } = useContext(AppContext);
+  const [wonCard, setWonCard] = useState('');
+
+  useEffect(() => {
+    const bestOutcome = getBestOutcome(gameResult);
+    setWonCard(gameState === 1 ? bestOutcome.won_card : '')
+  }, [gameState])
 
   const btnDisabled = () => {
     const sumBet = Object.values(cardBets).reduce((acc, cum) => acc + cum);
@@ -22,6 +29,7 @@ const Betting: React.FC = () => {
             type={data[0] as CardType}
             amount={data[1]}
             handleBet={handleBet}
+            isWonCard={data[0] === wonCard}
             hideBet={cardBetToBeHidden.length === 1 && cardBetToBeHidden[0][0] === data[0]}
           />
         })}

@@ -9,6 +9,7 @@ type Props = {
     cardType: CardType
   ) => void;
   hideBet: boolean;
+  isWonCard: boolean;
 };
 
 const colors = {
@@ -29,13 +30,13 @@ const colors = {
   },
 };
 
-const Card: React.FC<Props> = ({ type, amount, handleBet, hideBet }) => {
+const Card: React.FC<Props> = ({ type, amount, handleBet, hideBet, isWonCard = false }) => {
   return (
     <div
       className="w-40 h-28 flex flex-col gap-y-2 justify-center items-center rounded-md cursor-pointer"
       style={{
         backgroundColor: colors[type].bg,
-        border: `3px ${colors[type].border} solid`,
+        border: `${isWonCard ? '6px' : '3px'} ${colors[type].border} solid`,
       }}
     >
       <div className="h-8">
