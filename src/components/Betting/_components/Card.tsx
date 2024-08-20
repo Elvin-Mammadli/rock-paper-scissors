@@ -1,13 +1,10 @@
 import React from "react";
-import { CardType } from "../../../types/types";
+import { CardType } from "@/types/types";
 
 type Props = {
   type: CardType;
   amount: number;
-  handleBet: (
-    operator: "+" | "-",
-    cardType: CardType
-  ) => void;
+  handleBet: (operator: "+" | "-", cardType: CardType) => void;
   hideBet: boolean;
   isWonCard: boolean;
 };
@@ -30,31 +27,39 @@ const colors = {
   },
 };
 
-const Card: React.FC<Props> = ({ type, amount, handleBet, hideBet, isWonCard = false }) => {
+const Card: React.FC<Props> = ({
+  type,
+  amount,
+  handleBet,
+  hideBet,
+  isWonCard = false,
+}) => {
   return (
     <div
       className="w-40 h-28 flex flex-col gap-y-2 justify-center items-center rounded-md cursor-pointer"
       style={{
         backgroundColor: colors[type].bg,
-        border: `${isWonCard ? '6px' : '3px'} ${colors[type].border} solid`,
+        border: `${isWonCard ? "6px" : "3px"} ${colors[type].border} solid`,
       }}
     >
       <div className="h-8">
-        {hideBet ? null : <div className="group h-full px-1 flex items-center gap-x-1 text-sm leading-none font-semibold bg-white rounded-full border-[3px] border-blue-500 cursor-default">
-          <button
-            className="hidden group-hover:block"
-            onClick={() => handleBet("-", type)}
-          >
-            -
-          </button>
-          {amount}
-          <button
-            className="hidden group-hover:block"
-            onClick={() => handleBet("+", type)}
-          >
-            +
-          </button>
-        </div>}
+        {hideBet ? null : (
+          <div className="group h-full px-1 flex items-center gap-x-1 text-sm leading-none font-semibold bg-white rounded-full border-[3px] border-blue-500 cursor-default">
+            <button
+              className="hidden group-hover:block"
+              onClick={() => handleBet("-", type)}
+            >
+              -
+            </button>
+            {amount}
+            <button
+              className="hidden group-hover:block"
+              onClick={() => handleBet("+", type)}
+            >
+              +
+            </button>
+          </div>
+        )}
       </div>
       <span
         className="font-semibold"

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Text from "./_components/Text";
-import { AppContext } from "../../context/AppContext";
+import { AppContext } from "@/context/AppContext";
 
 const Balance: React.FC = () => {
   const state = useContext(AppContext);

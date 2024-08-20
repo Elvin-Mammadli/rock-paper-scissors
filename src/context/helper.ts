@@ -1,4 +1,4 @@
-import { GameState, IAppContext } from "../types/types";
+import { GameState, IAppContext } from "@/types/types";
 
 export const initialAppState: IAppContext = {
   gameState: GameState.START,
@@ -13,15 +13,15 @@ export const initialAppState: IAppContext = {
     scissors: 0,
   },
   gameResult: {
-    computer: '',
-    player_position_1: '',
-    player_position_2: '',
-    player_result_1: '',
-    player_result_2: '',
-    won_card_1: '',
-    won_card_2: '',
+    computer: "",
+    player_position_1: "",
+    player_position_2: "",
+    player_result_1: "",
+    player_result_2: "",
+    won_card_1: "",
+    won_card_2: "",
   },
-  handleBet: () => { },
-  playGame: () => { },
-  resetGame: () => { },
+  handleBet: () => {},
+  playGame: () => {},
+  resetGame: () => {},
 };

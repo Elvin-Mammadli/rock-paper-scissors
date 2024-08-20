@@ -1,11 +1,11 @@
 import React, { ReactNode, useState } from "react";
 import {
   getComputerChoice,
-  getGameStats,
+  getGameResult,
   getUserChoices,
   updatedBalance,
-} from "../utils/functions";
-import { GameState, CardType } from "../types/types";
+} from "@/utils/functions";
+import { GameState, CardType } from "@/types/types";
 import { initialAppState } from "./helper";
 import { AppContext } from "./AppContext";
 
@@ -14,11 +14,8 @@ const AppContextProvider: React.FC<{
 }> = ({ children }) => {
   const [appState, setAppState] = useState(initialAppState);
 
-  const handleBet = (
-    operator: "+" | "-",
-    cardType: CardType
-  ): void => {
-    const balance = appState.balanceStats.balance
+  const handleBet = (operator: "+" | "-", cardType: CardType): void => {
+    const balance = appState.balanceStats.balance;
     if (balance < 500) {
       alert(`Balance is not enough. Please deposit minimum ${500 - balance}`);
     } else {
@@ -44,12 +41,17 @@ const AppContextProvider: React.FC<{
   };
 
   const playGame = () => {
-    const { balanceStats, cardBets } = appState
+    const { balanceStats, cardBets } = appState;
     const computerChoice = getComputerChoice();
     const userChoices = getUserChoices(cardBets);
 
-    const gameResult = getGameStats(userChoices, computerChoice);
-    const updatedBalanceStats = updatedBalance(balanceStats, gameResult, cardBets)
+    const gameResult = getGameResult(userChoices, computerChoice);
+
+    const updatedBalanceStats = updatedBalance(
+      balanceStats,
+      gameResult,
+      cardBets
+    );
 
     setAppState((prev) => ({
       ...prev,
@@ -58,7 +60,7 @@ const AppContextProvider: React.FC<{
       balanceStats: {
         ...prev.balanceStats,
         ...updatedBalanceStats,
-      }
+      },
     }));
   };
 
