@@ -94,13 +94,15 @@ export const showAmount = (
 ): number | undefined => {
   if (!result || result.player_position === "") return;
   const { player_position, player_result } = result;
-  const isTwoBet = Object.values(cardBets).filter(Boolean).length > 1;
+  const betsArray = Object.values(cardBets).filter(Boolean);
+  const sumBet = betsArray.reduce((acc, cum) => acc + cum);
+  const isTwoBet = betsArray.length > 1;
   const winningMultiplier = isTwoBet ? 3 : 14;
 
   if (player_result === "won") {
     return cardBets[player_position] * winningMultiplier;
   } else {
-    return cardBets[player_position];
+    return sumBet;
   }
 };
 

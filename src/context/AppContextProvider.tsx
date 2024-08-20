@@ -15,8 +15,11 @@ const AppContextProvider: React.FC<{
   const [appState, setAppState] = useState(initialAppState);
 
   const handleBet = (operator: "+" | "-", cardType: CardType): void => {
+    if (appState.gameState === GameState.END) {
+      resetGame();
+    }
     const balance = appState.balanceStats.balance;
-    if (balance < 500) {
+    if (operator === "+" && balance < 500) {
       alert(`Balance is not enough. Please deposit minimum ${500 - balance}`);
     } else {
       setAppState((prev) => {
