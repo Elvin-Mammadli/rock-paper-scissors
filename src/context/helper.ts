@@ -3,7 +3,7 @@ import { GameState, IAppContext } from "@/types/types";
 export const initialAppState: IAppContext = {
   gameState: GameState.START,
   balanceStats: {
-    balance: 1000,
+    balance: 5000,
     bet: 0,
     win: 0,
   },
