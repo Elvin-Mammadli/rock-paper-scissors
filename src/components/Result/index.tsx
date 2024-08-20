@@ -13,8 +13,6 @@ const Result: React.FC = () => {
   const [bestOutcome, setBestOutcome] = useState<BestOutcome | null>(null);
   const [versus, setVersus] = useState<Partial<BestOutcome> | null>(null);
 
-  console.log(gameResult);
-
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
 
