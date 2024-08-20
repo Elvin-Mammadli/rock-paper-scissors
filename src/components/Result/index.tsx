@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/context/AppContext";
-import { BestOutcome, GameState } from "@/types/types";
+import { BestOutcome, GameState } from "@/types";
 import {
   getBestOutcome,
   isTwoBets,

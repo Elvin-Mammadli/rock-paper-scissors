@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Card from "./_components/Card";
 import { AppContext } from "@/context/AppContext";
-import { CardType, GameState } from "@/types/types";
+import { CardType, GameState } from "@/types";
 import { getBestOutcome } from "@/utils/functions";
 
 const Betting: React.FC = () => {

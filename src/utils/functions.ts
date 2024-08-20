@@ -1,11 +1,11 @@
-import { PAPER, ROCK, SCISSORS } from "@/constants/constants";
+import { PAPER, ROCK, SCISSORS } from "@/constants";
 import {
   BalanceStats,
   BestOutcome,
   CardBets,
   CardType,
   GameResult,
-} from "@/types/types";
+} from "@/types";
 
 export const getComputerChoice = () => {
   const randomSelect = Math.floor(Math.random() * 3);

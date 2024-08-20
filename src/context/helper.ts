@@ -1,4 +1,4 @@
-import { GameState, IAppContext } from "@/types/types";
+import { GameState, IAppContext } from "@/types";
 
 export const initialAppState: IAppContext = {
   gameState: GameState.START,

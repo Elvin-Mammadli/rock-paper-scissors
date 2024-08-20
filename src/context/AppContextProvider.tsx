@@ -5,7 +5,7 @@ import {
   getUserChoices,
   updatedBalance,
 } from "@/utils/functions";
-import { GameState, CardType } from "@/types/types";
+import { GameState, CardType } from "@/types";
 import { initialAppState } from "./helper";
 import { AppContext } from "./AppContext";
 

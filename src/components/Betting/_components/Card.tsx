@@ -1,5 +1,5 @@
 import React from "react";
-import { CardType } from "@/types/types";
+import { CardType } from "@/types";
 
 type Props = {
   type: CardType;
