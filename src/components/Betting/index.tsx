@@ -45,7 +45,7 @@ const Betting: React.FC = () => {
       <button
         disabled={btnDisabled()}
         onClick={gameState === GameState.START ? playGame : resetGame}
-        className="w-40 h-16 mx-auto mt-10 bg-[#070707] uppercase font-semibold text-2xl text-[#9e8b68] border-2 border-[#9e8b68] rounded-full disabled:text-[#9e8b68]/50 disabled:border-[#9e8b68]/50"
+        className="w-40 h-16 mx-auto mt-10 bg-black uppercase font-semibold text-2xl text-yellow-500 border-2 border-yellow-500 rounded-full disabled:text-yellow-500/50 disabled:border-yellow-500/50"
       >
         {gameState === GameState.START ? "Play" : "Clear"}
       </button>

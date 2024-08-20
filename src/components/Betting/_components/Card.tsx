@@ -62,12 +62,12 @@ const Card: React.FC<Props> = ({
         )}
       </div>
       <span
-        className="font-semibold"
+        className="font-semibold uppercase"
         style={{
           color: colors[type].text,
         }}
       >
-        {type.toUpperCase()}
+        {type}
       </span>
     </div>
   );
